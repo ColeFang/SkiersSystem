@@ -26,6 +26,11 @@ public class update implements Runnable{
     private int id;
     private Random rand =new Random(25);
     private BufferedWriter writer;
+    /**
+    * @Description:
+    * @Param: [basePath, skiers_start, skiers_end, time_start, time_end, wait_start, wait_end, lift_end, times, id, writer]
+    * @return:
+    */
     public update(String basePath, int skiers_start, int skiers_end, int time_start, int time_end, int wait_start, int wait_end, int lift_end, int times, int id, BufferedWriter writer) {
         this.basePath=basePath;
         this.skiers_end=skiers_end;
@@ -40,10 +45,17 @@ public class update implements Runnable{
         this.writer=writer;
     }
 
+    /**
+    * @Description:
+    * @Param: []
+    * @return: void
+    */
+
     @Override
     public void run() {
 
         for (int i = 0; i < times; i++) {
+            // post data to the server
             long startTime = System.currentTimeMillis();
             SkiersApi apiInstance = new SkiersApi();
             ApiClient apiClient = new ApiClient();
@@ -59,10 +71,8 @@ public class update implements Runnable{
                     apiInstance.writeNewLiftRide(liftRide,12,"12","12",skiersID);
                     break;
                 } catch (ApiException e) {
-                    //System.err.println("Exception when calling ResortsApi#getResorts");
-                    //e.printStackTrace();
-                    //System.out.println(1);
-
+                    System.err.println("Exception when calling ResortsApi#getResorts");
+                    e.printStackTrace();
                 }
             }
             long endTime = System.currentTimeMillis();

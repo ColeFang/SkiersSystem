@@ -32,7 +32,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 public class skiersUpdate {
+    /**
+    * @Description:
+    * @Param: [args]
+    * @return: void
+    */
     public static void main(String[] args) throws InterruptedException, IOException, ArgumentsException {
+        // get configures from command line
         int num_threads = 0;
         int num_skiers=0;
         int num_lift = 0;
@@ -41,9 +47,9 @@ public class skiersUpdate {
         Option numThreads = new Option(null, "num_threads", true, "maximum number of threads to run");
         Option numSkiers = new Option(null, "num_skiers", true, "number of skier to generate lift rides for");
         Option numLifts = new Option(null, "num_lifts", true, "number of ski lifts ");
-        Option numRuns  = new Option(null, "num_runs", true, "number of skier to generate lift rides for");
-        Option ip = new Option(null, "ip", true, "number of skier to generate lift rides for");
-        Option port = new Option(null, "port", true, "number of skier to generate lift rides for");
+        Option numRuns  = new Option(null, "num_runs", true, "number of runs for each user.");
+        Option ip = new Option(null, "ip", true, "ip address for the server.");
+        Option port = new Option(null, "port", true, "port for the connection.");
 
         Options options = new Options();
         options.addOption(numThreads);
@@ -67,7 +73,7 @@ public class skiersUpdate {
         } catch (ParseException e) {
             helpFormatter.printHelp(">>>>>> test cli options", options);
             e.printStackTrace();
-            throw new ArgumentsException("argy");
+            throw new ArgumentsException("Error:");
         }
 
         long startTime = System.currentTimeMillis();
@@ -89,6 +95,7 @@ public class skiersUpdate {
             Thread.sleep(30);
         }
         System.out.println("phase2 start");
+
         //phase 2
         int num_phase2 = num_threads;
         int skies2 = num_skiers/num_phase2;
@@ -114,6 +121,7 @@ public class skiersUpdate {
             es3.execute(new update(basePath, i*skies3,(i+1)*skies3,361,420,0,10,num_lift, times3,i,writeText));
         }
 
+        //stop check
         ThreadPoolExecutor tpe3 = ((ThreadPoolExecutor) es3);
         while (tpe1.getCompletedTaskCount()!=num_phase1 || tpe2.getCompletedTaskCount()!=num_phase2 || tpe3.getCompletedTaskCount()!=num_phase3){
             Thread.sleep(30);
@@ -123,6 +131,7 @@ public class skiersUpdate {
         int requests = num_phase1 * times1 + num_phase2 * times2 + num_phase3 * times3;
         int wallTime = (int) ((endTime - startTime)/1000);
 
+        //print results
         System.out.println("completed requests number: "+requests);
         System.out.println("uncompleted requests number: 0");
         System.out.println("wall time：" + wallTime + "s");
