@@ -66,9 +66,12 @@ public class update implements Runnable{
             liftRide.setTime(rand.nextInt(time_end-time_start)+time_start);
             liftRide.setWaitTime(rand.nextInt(wait_end));
             int skiersID = rand.nextInt(skiers_end-skiers_start)+skiers_start;
-            for (int j = 0; j < 1; j++) {
+            skiersUpdate.sendNumber += 1.0;
+            for (int j = 0; j < 5; j++) {
                 try {
                     apiInstance.writeNewLiftRide(liftRide,12,"12","12",skiersID);
+                    skiersUpdate.receiveNumber+=1.0;
+                    System.out.println("send/receive:   " + skiersUpdate.sendNumber/skiersUpdate.receiveNumber);
                     break;
                 } catch (ApiException e) {
                     System.err.println("Exception when calling ResortsApi#getResorts");

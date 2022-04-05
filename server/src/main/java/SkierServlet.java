@@ -1,98 +1,155 @@
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.MessageProperties;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
-@WebServlet(name = "Servlet", value = "/Servlet")
+@WebServlet(
+        name = "Servlet",
+        value = {"/Servlet"}
+)
 public class SkierServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.setContentType("text/plain");
-        String urlPath = req.getPathInfo();
+    private static final String EXCHANGE_NAME = "exchange";
+    private static final String ROUTING_KEY = "routing_key";
+    private static final String IP_ADDRESS = "172.31.31.193";
+    private static final int MAX_CHANNEL = 8;
+    private static final int MIN_CHANNEL = 0;
+    private static final int PORT = 5672;
+    private static ConnectionFactory factory;
+    private static RabbitMQChannelPool rabbitMQChannelPool;
+    private String jsonMessage;
 
-        // check URL
-        if (urlPath == null || urlPath.isEmpty()) {
-            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            res.getWriter().write("missing paramterers");
-            res.getWriter().write(urlPath);
-            return;
-        }
-
-        String[] urlParts = urlPath.split("/");
-        if (!isUrlValid(urlParts)) {
-            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            res.getWriter().write("invalid url");
-        } else {
-            res.setStatus(HttpServletResponse.SC_OK);
-            res.getWriter().write("url accepted");
-        }
+    public SkierServlet() throws IOException, TimeoutException {
+        factory = new ConnectionFactory();
+        factory.setHost(IP_ADDRESS);
+        factory.setPort(5672);
+        factory.setUsername("admin");
+        factory.setPassword("root");
+        GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+        config.setMaxTotal(8);
+        config.setMaxIdle(8);
+        config.setMinIdle(0);
+        rabbitMQChannelPool = new RabbitMQChannelPool(new RabbitMQChannelPoolFactory(factory), config);
     }
 
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        Channel channel = rabbitMQChannelPool.getChannel();
+        res.setContentType("text/plain");
+        String urlPath = req.getPathInfo();
+        if (urlPath != null && !urlPath.isEmpty()) {
+            this.jsonMessage = "";
+            String[] urlParts = urlPath.split("/");
+            if (!this.isUrlValid(urlParts)) {
+                res.setStatus(404);
+                res.getWriter().write("invalid url");
+            } else {
+                res.setStatus(200);
+                res.getWriter().write("url accepted");
+                channel.basicPublish("exchange", "routing_key", MessageProperties.PERSISTENT_TEXT_PLAIN, this.getMessage(urlPath));
+            }
+        } else {
+            res.setStatus(404);
+            res.getWriter().write("missing paramterers");
+            res.getWriter().write(urlPath);
+        }
+        rabbitMQChannelPool.returnChannel(channel);
+    }
 
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        Channel channel = rabbitMQChannelPool.getChannel();
         res.setContentType("text/plain");
         BufferedReader post = req.getReader();
         String urlPath = req.getPathInfo();
+        if (urlPath != null && !urlPath.isEmpty()) {
+            this.jsonMessage = "";
+            String[] urlParts = urlPath.split("/");
+            if (this.checkJson(post) && this.isUrlValid(urlParts)) {
+                res.setStatus(200);
+                res.getWriter().write("data accepted");
+                channel.basicPublish("exchange", "routing_key", MessageProperties.PERSISTENT_TEXT_PLAIN, this.getMessage(urlPath));
+            } else {
+                res.setStatus(404);
+                res.getWriter().write("invalid data");
+            }
 
-        // check URL
-        if (urlPath == null || urlPath.isEmpty()) {
-            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        } else {
+            res.setStatus(404);
             res.getWriter().write("missing paramterers");
             res.getWriter().write(urlPath);
-            return;
+        }
+        rabbitMQChannelPool.returnChannel(channel);
+    }
+
+    private boolean checkJson(BufferedReader post) throws IOException {
+        String[] keys = new String[]{"time", "liftID", "waitTime"};
+        List<String> tempList = Arrays.asList(keys);
+
+        String str;
+        for(str = null; str == null; str = post.readLine()) {
         }
 
-        String[] urlParts = urlPath.split("/");
-        if (checkJson(post) && isUrlValid(urlParts)) {
-            res.setStatus(HttpServletResponse.SC_OK);
-            res.getWriter().write("data accepted");
-        } else {
-            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            res.getWriter().write("invalid data");
-        }
-    }
-    private boolean checkJson(BufferedReader post) throws IOException {
-        String[] keys={"time","liftID","waitTime"};
-        List<String> tempList = Arrays.asList(keys);
-        String str=null;
-        String key;
-        String value;
-        while (str==null){
-            str=post.readLine();
-        }
         String[] temp = str.split(",");
         if (temp.length != 3) {
             return false;
-        }
-        for (int i = 0; i < 3; i++) {
-            key = temp[i].split("\"")[1];
-            value = temp[i].split(":")[1];
-            value = value.replace("}","");
-            if (!tempList.contains(key)) {
-                return false;
-            } else if (key.equals("time") && !value.matches("\\d+")) {
-                return false;
-            } else if (key.equals("liftID") && !value.matches("\\d+")) {
-                return false;
-            } else if (key.equals("waitTime") && !value.matches("\\d+")) {
-                return false;
+        } else {
+            String[] values = new String[3];
+
+            for(int i = 0; i < 3; ++i) {
+                String key = temp[i].split("\"")[1];
+                String value = temp[i].split(":")[1];
+                value = value.replace("}", "");
+                values[i] = value;
+                if (!tempList.contains(key)) {
+                    return false;
+                }
+
+                if (key.equals("time") && !value.matches("\\d+")) {
+                    return false;
+                }
+
+                if (key.equals("liftID") && !value.matches("\\d+")) {
+                    return false;
+                }
+
+                if (key.equals("waitTime") && !value.matches("\\d+")) {
+                    return false;
+                }
             }
+
+            this.jsonMessage = "/time/" + values[0] + "/liftID/" + values[1] + "/waitTime/" + values[2];
+            return true;
         }
-        return true;
+    }
+
+    private byte[] getMessage(String url) throws IOException {
+        String message = "resorts" + url + this.jsonMessage;
+        return message.getBytes(StandardCharsets.UTF_8);
     }
 
     private boolean isUrlValid(String[] urlPath) {
-        if (urlPath.length!=8){
+        if (urlPath.length != 8) {
             return false;
+        } else {
+            boolean valid = true;
+            valid = valid && urlPath[2].equals("seasons") && urlPath[4].equals("days") && urlPath[6].equals("skiers");
+            valid = valid && urlPath[1].matches("\\d+") && urlPath[3].matches("\\d+") && urlPath[5].matches("\\d+") && urlPath[7].matches("\\d+");
+            valid = valid && Integer.parseInt(urlPath[5]) >= 1 && Integer.parseInt(urlPath[5]) <= 366;
+            return valid;
         }
-        boolean valid = true;
-        valid = valid && (urlPath[2].equals("seasons")) && (urlPath[4].equals("days")) && (urlPath[6].equals("skiers"));
-        valid = valid &&  urlPath[1].matches("\\d+") &&  urlPath[3].matches("\\d+") &&  urlPath[5].matches("\\d+") &&  urlPath[7].matches("\\d+");
-        valid = valid && (Integer.parseInt(urlPath[5])>=1) && (Integer.parseInt(urlPath[5])<=366);
-        return valid;
     }
 }

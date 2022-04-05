@@ -37,6 +37,8 @@ public class skiersUpdate {
     * @Param: [args]
     * @return: void
     */
+    public static float sendNumber = 0;
+    public static float receiveNumber = 0;
     public static void main(String[] args) throws InterruptedException, IOException, ArgumentsException {
         // get configures from command line
         int num_threads = 0;
@@ -48,16 +50,16 @@ public class skiersUpdate {
         Option numSkiers = new Option(null, "num_skiers", true, "number of skier to generate lift rides for");
         Option numLifts = new Option(null, "num_lifts", true, "number of ski lifts ");
         Option numRuns  = new Option(null, "num_runs", true, "number of runs for each user.");
-        Option ip = new Option(null, "ip", true, "ip address for the server.");
-        Option port = new Option(null, "port", true, "port for the connection.");
+        //Option ip = new Option(null, "ip", true, "ip address for the server.");
+        //Option port = new Option(null, "port", true, "port for the connection.");
 
         Options options = new Options();
         options.addOption(numThreads);
         options.addOption(numSkiers);
         options.addOption(numLifts);
         options.addOption(numRuns);
-        options.addOption(ip);
-        options.addOption(port);
+        //options.addOption(ip);
+        //options.addOption(port);
         CommandLine cli = null;
         CommandLineParser cliParser = new DefaultParser();
         HelpFormatter helpFormatter = new HelpFormatter();
@@ -67,9 +69,9 @@ public class skiersUpdate {
             num_skiers = Integer.parseInt(cli.getOptionValue(numSkiers.getLongOpt()));
             num_lift = Integer.parseInt(cli.getOptionValue(numLifts.getLongOpt()));
             num_run = Integer.parseInt(cli.getOptionValue(numRuns.getLongOpt()));
-            String ip_string = cli.getOptionValue(ip.getLongOpt());
-            String port_string = cli.getOptionValue(port.getLongOpt());
-            basePath="http://18.212.27.70:8080/skiers-1";
+            //String ip_string = cli.getOptionValue(ip.getLongOpt());
+            //String port_string = cli.getOptionValue(port.getLongOpt());
+            basePath="http://skiers-d8b65650b78ad35c.elb.us-east-1.amazonaws.com:8080/skiers-1";
         } catch (ParseException e) {
             helpFormatter.printHelp(">>>>>> test cli options", options);
             e.printStackTrace();
@@ -140,4 +142,5 @@ public class skiersUpdate {
         writeText.close();
     }
 }
+
 

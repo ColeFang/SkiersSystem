@@ -2,14 +2,29 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Idea:war" />
+      <artifact name="skiers:war" />
+      <artifact name="skiers:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4275bf28-e7ba-468e-a987-ab49c0b0dcf1" name="Changes" comment="" />
+    <list default="true" id="4275bf28-e7ba-468e-a987-ab49c0b0dcf1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPoolFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/main/java/skiersUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/main/java/skiersUpdate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/main/java/update.java" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/main/java/update.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/write32.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../client/write32.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Idea_war_exploded.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SkierServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SkierServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/skiers-1/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/skiers-1/WEB-INF/web.xml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +37,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -30,6 +48,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectId" id="25GMj1sXxzgAnyr25bl1gAva95B" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -37,22 +56,40 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/target/skiers-1.war" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 9.0.58" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.58" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/skiers_1_war/" />
-      <option name="UPDATING_POLICY" value="restart-server" />
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/skiers_war_exploded" />
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <deployment>
-        <file path="$PROJECT_DIR$/target/skiers-1.war">
+        <file path="$PROJECT_DIR$/../../../assignment6/target/skiers-1.war">
           <settings>
             <option name="CONTEXT_PATH" value="/skiers_1_war" />
           </settings>
         </file>
+        <artifact name="skiers:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/skiers_war_exploded" />
+          </settings>
+        </artifact>
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="1232847e-c036-4678-8778-062fb56c7a17" />
@@ -127,7 +164,9 @@
       </ConfigurationWrapper>
       <method v="2">
         <option name="Make" enabled="true" />
-        <option name="BuildArtifacts" enabled="false" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="skiers:war exploded" />
+        </option>
       </method>
     </configuration>
   </component>
@@ -141,10 +180,26 @@
       <updated>1645149101955</updated>
       <workItem from="1645149103944" duration="40000" />
       <workItem from="1645149302380" duration="3287000" />
+      <workItem from="1646876894972" duration="840000" />
+      <workItem from="1646885716459" duration="3051000" />
+      <workItem from="1647021653361" duration="2215000" />
+      <workItem from="1647055111685" duration="206000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
