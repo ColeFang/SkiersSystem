@@ -10,7 +10,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4275bf28-e7ba-468e-a987-ab49c0b0dcf1" name="Changes" comment="" />
+    <list default="true" id="4275bf28-e7ba-468e-a987-ab49c0b0dcf1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Consumer/src/main/java/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Consumer/src/main/java/Consumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Consumer/src/main/java/RabbitMQChannelPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Consumer/src/main/java/RabbitMQChannelPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Consumer/src/main/java/RabbitMQChannelPoolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Consumer/src/main/java/RabbitMQChannelPoolFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPoolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPoolFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SkierServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SkierServlet.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +51,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../assignment6/Consumer" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -171,6 +178,7 @@
       <workItem from="1647021653361" duration="2215000" />
       <workItem from="1647055111685" duration="206000" />
       <workItem from="1649139581929" duration="49000" />
+      <workItem from="1649180801823" duration="121000" />
     </task>
     <servers />
   </component>

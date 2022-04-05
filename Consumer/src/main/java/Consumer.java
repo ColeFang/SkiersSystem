@@ -32,6 +32,11 @@ public class Consumer {
     private static ConcurrentHashMap<String, ArrayList<String>> records = new ConcurrentHashMap<String,ArrayList<String>>();
     private static final ConnectionFactory factory = new ConnectionFactory();
     private static RabbitMQChannelPool rabbitMQChannelPool;
+    /**
+    * @Description: 
+    * @Param: [args]
+    * @return: void
+    */
     public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
         factory.setUsername("admin");
         factory.setPassword("root");

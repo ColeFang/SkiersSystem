@@ -34,6 +34,11 @@ public class SkierServlet extends HttpServlet {
     private static RabbitMQChannelPool rabbitMQChannelPool;
     private String jsonMessage;
 
+    /**
+    * @Description: 
+    * @Param: []
+    * @return: 
+    */
     public SkierServlet() throws IOException, TimeoutException {
         factory = new ConnectionFactory();
         factory.setHost(IP_ADDRESS);
@@ -47,6 +52,11 @@ public class SkierServlet extends HttpServlet {
         rabbitMQChannelPool = new RabbitMQChannelPool(new RabbitMQChannelPoolFactory(factory), config);
     }
 
+    /**
+    * @Description: 
+    * @Param: [req, res]
+    * @return: void
+    */
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Channel channel = rabbitMQChannelPool.getChannel();
         res.setContentType("text/plain");
@@ -70,6 +80,11 @@ public class SkierServlet extends HttpServlet {
         rabbitMQChannelPool.returnChannel(channel);
     }
 
+    /**
+    * @Description: 
+    * @Param: [req, res]
+    * @return: void
+    */
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Channel channel = rabbitMQChannelPool.getChannel();
         res.setContentType("text/plain");
@@ -95,6 +110,11 @@ public class SkierServlet extends HttpServlet {
         rabbitMQChannelPool.returnChannel(channel);
     }
 
+    /**
+    * @Description: 
+    * @Param: [post]
+    * @return: boolean
+    */
     private boolean checkJson(BufferedReader post) throws IOException {
         String[] keys = new String[]{"time", "liftID", "waitTime"};
         List<String> tempList = Arrays.asList(keys);
@@ -136,11 +156,21 @@ public class SkierServlet extends HttpServlet {
         }
     }
 
+    /**
+    * @Description: 
+    * @Param: [url]
+    * @return: byte[]
+    */
     private byte[] getMessage(String url) throws IOException {
         String message = "resorts" + url + this.jsonMessage;
         return message.getBytes(StandardCharsets.UTF_8);
     }
 
+    /**
+    * @Description: 
+    * @Param: [urlPath]
+    * @return: boolean
+    */
     private boolean isUrlValid(String[] urlPath) {
         if (urlPath.length != 8) {
             return false;

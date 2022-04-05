@@ -20,10 +20,20 @@ public class RabbitMQChannelPoolFactory implements PooledObjectFactory<Channel> 
     private static final String EXCHANGE_NAME = "exchange";
     private static final String ROUTING_KEY = "routing_key";
     private static final String QUEUE_NAME = "lifts_queue";
+    /**
+    * @Description:
+    * @Param: [factory]
+    * @return:
+    */
     public RabbitMQChannelPoolFactory(ConnectionFactory factory) throws IOException, TimeoutException {
         this.connection = factory.newConnection();
     }
 
+    /**
+    * @Description:
+    * @Param: []
+    * @return: org.apache.commons.pool2.PooledObject<com.rabbitmq.client.Channel>
+    */
     @Override
     public PooledObject<Channel> makeObject() throws Exception {
         DefaultPooledObject<Channel> channel = new DefaultPooledObject<Channel>(connection.createChannel());
@@ -33,6 +43,11 @@ public class RabbitMQChannelPoolFactory implements PooledObjectFactory<Channel> 
         return channel;
     }
 
+    /**
+    * @Description:
+    * @Param: [p]
+    * @return: void
+    */
     @Override
     public void destroyObject(PooledObject<Channel> p) throws Exception {
         if (p != null && p.getObject() != null && p.getObject().isOpen()) {
@@ -40,20 +55,37 @@ public class RabbitMQChannelPoolFactory implements PooledObjectFactory<Channel> 
         }
     }
 
+    /**
+    * @Description:
+    * @Param: [p]
+    * @return: boolean
+    */
     @Override
     public boolean validateObject(PooledObject<Channel> p) {
         return p.getObject() != null && p.getObject().isOpen();
     }
 
+    /**
+    * @Description:
+    * @Param: [p]
+    * @return: void
+    */
     @Override
-    public void activateObject(PooledObject<Channel> p) throws Exception {
+    public void activateObject(PooledObject<Channel> p) throws Exception {}
 
-    }
-
+    /**
+    * @Description:
+    * @Param: [p]
+    * @return: void
+    */
     @Override
-    public void passivateObject(PooledObject<Channel> p) throws Exception {
-
-    }
+    public void passivateObject(PooledObject<Channel> p) throws Exception {}
+    
+    /**
+    * @Description:
+    * @Param: []
+    * @return: void
+    */
     public void closeConnection() throws IOException {
         connection.close();
     }
