@@ -15,12 +15,10 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import redis.clients.jedis.Jedis;
 
 /**
  * consumer
@@ -28,8 +26,9 @@ import java.util.logging.Logger;
 public class Consumer {
     private static final String QUEUE_NAME = "lifts_queue";
     private static final String IP_ADDRESS = "172.31.31.193";
+    private static final boolean SERVICE1 = true;
+    private static final boolean SERVICE2 = true;
     private static final int PORT = 5672;
-    private static ConcurrentHashMap<String, ArrayList<String>> records = new ConcurrentHashMap<String,ArrayList<String>>();
     private static final ConnectionFactory factory = new ConnectionFactory();
     private static RabbitMQChannelPool rabbitMQChannelPool;
     /**
@@ -48,6 +47,8 @@ public class Consumer {
         config.setMinIdle(0);
         RabbitMQChannelPoolFactory pool = new RabbitMQChannelPoolFactory(factory);
         rabbitMQChannelPool = new RabbitMQChannelPool(pool,config);
+        Jedis jedis = new Jedis("localhost");
+
 
         Runnable runnable = new Runnable() {
             @Override
@@ -65,23 +66,31 @@ public class Consumer {
                             ArrayList<String> oldValue = new ArrayList<String>();
                             ArrayList<String> newValue = new ArrayList<String>();
                             String record = new String(body);
-                            String skiers = record.split("/")[7];
-                            while (true) {
-                                oldValue = records.get(skiers);
-                                if (null == oldValue) {
-                                    newValue.add(record);
-                                    if (records.putIfAbsent(skiers, newValue) == null) {
-                                        break;
-                                    }
-                                } else {
-                                    newValue = oldValue;
-                                    newValue.add(record);
-                                    if (records.replace(skiers, oldValue, newValue)) {
-                                        break;
-                                    }
-                                }
+                            String[] recordList = record.split("/");
+                            //add data to redis
+                            if(SERVICE1) {
+                                String day = recordList[5];
+                                String skier = recordList[7];
+                                String lift = recordList[11];
+                                jedis.select(0);
+                                jedis.lpush(skier, day + "_" + lift);
+                            }
+                            if(SERVICE2){
+                                String resort = recordList[1];
+                                String day = recordList[5];
+                                String skier = recordList[7];
+                                String time = recordList[9];
+                                String lift = recordList[11];
+                                jedis.select(1);
+                                jedis.lpush(resort + "_" + day, skier + "_" + lift + "_" + time);
+                            }
+                            try {
+                                Thread.sleep(3);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
                             channel.basicAck(envelope.getDeliveryTag(), false);
+
                         }
                     });
                     rabbitMQChannelPool.returnChannel(channel);
@@ -91,10 +100,9 @@ public class Consumer {
                 }
             }
         };
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 1; i++) {
             Thread consumer = new Thread(runnable);
             consumer.start();
-
         }
     }
 }

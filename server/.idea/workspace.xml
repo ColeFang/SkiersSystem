@@ -11,12 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4275bf28-e7ba-468e-a987-ab49c0b0dcf1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Consumer/.idea/artifacts/Consumer_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Consumer/.idea/artifacts/Consumer_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Consumer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Consumer/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Consumer/src/main/java/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Consumer/src/main/java/Consumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Consumer/src/main/java/RabbitMQChannelPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Consumer/src/main/java/RabbitMQChannelPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Consumer/src/main/java/RabbitMQChannelPoolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Consumer/src/main/java/RabbitMQChannelPoolFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPoolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/RabbitMQChannelPoolFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SkierServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SkierServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/write32.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../client/write32.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,6 +178,12 @@
       <workItem from="1647055111685" duration="206000" />
       <workItem from="1649139581929" duration="49000" />
       <workItem from="1649180801823" duration="121000" />
+      <workItem from="1649181352038" duration="13000" />
+      <workItem from="1649285627115" duration="2549000" />
+      <workItem from="1649293589844" duration="35000" />
+      <workItem from="1649294174765" duration="594000" />
+      <workItem from="1649363522261" duration="4000" />
+      <workItem from="1649363685377" duration="18000" />
     </task>
     <servers />
   </component>
